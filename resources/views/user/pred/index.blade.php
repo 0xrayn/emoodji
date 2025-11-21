@@ -13,7 +13,7 @@
                 <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
                     <p class="d-inline-block border rounded text-primary fw-semi-bold py-1 px-3">Prediksi</p>
                     <h1 class="display-5 mb-4">Cek Kemungkinan Depresi</h1>
-                    <p class="mb-4">Selamat datang di Fitur Cek Depresi Emoodji, alat yang dirancang untuk membantu Anda mengevaluasi dan memahami tingkat depresi Anda. 
+                    <p class="mb-4">Selamat datang di Fitur Cek Depresi Emoodji, alat yang dirancang untuk membantu Anda mengevaluasi dan memahami tingkat depresi Anda.
                         Fitur ini menyediakan penilaian singkat yang dapat membantu Anda memprediksi apakah mungkin mengalami kondisi ini berdasarkan kondisi Anda.</p>
                     <form action="{{ route('cekDepresi') }}" method="POST">
                         @csrf
@@ -171,13 +171,13 @@
                                     <label for="ent_nonagbusiness">Terlibat bisnis non-pertanian?</label>
                                 </div>
                             </div>
-                            
+
                             <div class="col-12">
                                 <button class="btn btn-primary py-3 px-5" type="submit">Prediksi</button>
                             </div>
                         </div>
                     </form>
-                    
+
                 </div>
                 <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s" style="min-height: 450px;">
                     <div class="position-relative rounded overflow-hidden h-100">

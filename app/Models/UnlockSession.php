@@ -5,21 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Prediksi extends Model
+class UnlockSession extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'predicted_proba_class_0',
-        'predicted_proba_class_1',
-        'no_teks',
         'user_id',
-        'unlock_cost'
+        'unlockable_id',
+        'unlockable_type',
+        'status',
+        'unlock_cost',
     ];
 
-    public function unlockSessions()
+    public function unlockable()
     {
-        return $this->morphMany(UnlockSession::class, 'unlockable');
+        return $this->morphTo();
     }
 
     public function user()

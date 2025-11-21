@@ -19,9 +19,16 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->enum('gender', ['male', 'female'])->nullable();
             $table->rememberToken();
+            $table->boolean('active_status')->default(0);
             $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
+            $table->enum('theme', ['blue', 'pink'])->nullable();
+            $table->string('avatar')->default(config('chatify.user_avatar.default'));
+            $table->boolean('dark_mode')->default(0);
+                $table->string('messenger_color')->nullable();
+            $table->integer('reward')->default(0);
             $table->timestamps();
         });
 

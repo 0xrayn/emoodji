@@ -24,32 +24,61 @@ class DatabaseSeeder extends Seeder
                 'email' => 'emoodji@gmail.com',
                 'usertype' => 'admin',
                 'password' => Hash::make('emoodji'),
-                'email_verified_at' => '2024-06-02 12:17:47',
+                'email_verified_at' => now(),
+                'reward' => 0
             ],
             [
                 'name' => "Testing",
                 'email' => 'testing@gmail.com',
                 'usertype' => 'user',
                 'password' => Hash::make('testing'),
-                'email_verified_at' => '2024-06-02 12:17:47',
+                'email_verified_at' => now(),
+                'reward' => 50 // user awal dapat 50 reward
             ]
         ]);
 
         DB::table('quizzes')->insert([
             [
                 'quiz_name' => "Tes Mengenali Emosi",
-                'user_id' => '1',
+                'user_id' => 1,
+                'unlock_cost' => 10,
             ],
             [
                 'quiz_name' => "Tes Tingkat Stres",
-                'user_id' => '1',
+                'user_id' => 1,
+                'unlock_cost' => 15,
             ],
             [
                 'quiz_name' => "Tes Bersyukur",
-                'user_id' => '1',
+                'user_id' => 1,
+                'unlock_cost' => 12,
             ]
-
         ]);
+
+        DB::table('permainans')->insert([
+            [
+                'name' => 'Mahjong',
+                'type' => 'game',
+                'reward' => 5,
+            ],
+            [
+                'name' => 'Memory Game',
+                'type' => 'game',
+                'reward' => 5,
+            ],
+            [
+                'name' => 'Puzzle Game',
+                'type' => 'game',
+                'reward' => 5,
+            ],
+            [
+                'name' => 'Tebak Angka',
+                'type' => 'game',
+                'reward' => 5,
+            ]
+        ]);
+
+
 
         DB::table('questions')->insert([
             [

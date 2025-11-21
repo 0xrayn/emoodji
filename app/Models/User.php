@@ -29,7 +29,11 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'usertype',
         'phone',
+        'gender',
+        'theme',
+        'reward'
     ];
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -63,5 +67,26 @@ class User extends Authenticatable implements MustVerifyEmail
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function unlockSessions()
+{
+    return $this->hasMany(UnlockSession::class);
+}
+
+
+    public function quizzes()
+    {
+        return $this->hasMany(Quiz::class);
+    }
+
+    public function quizResults()
+    {
+        return $this->hasMany(QuizResult::class);
+    }
+
+    public function prediksi()
+    {
+        return $this->hasMany(Prediksi::class);
     }
 }

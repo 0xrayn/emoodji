@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('quiz_name', 100);
             $table->integer('user_id');
+            $table->integer('unlock_cost')->default(0);
             $table->timestamps();
         });
     }

@@ -37,8 +37,8 @@ class PrediksiController extends Controller
     public function cekDepresi(Request $request)
     {
         $data = $request->only([
-            'femaleres', 'age', 'married', 'children', 'hhsize', 'edu', 
-            'day_of_week', 'saved_mpesa', 'received_mpesa', 'given_mpesa', 
+            'femaleres', 'age', 'married', 'children', 'hhsize', 'edu',
+            'day_of_week', 'saved_mpesa', 'received_mpesa', 'given_mpesa',
             'ent_wagelabor', 'ent_ownfarm', 'ent_business', 'ent_nonagbusiness'
         ]);
 
@@ -49,7 +49,7 @@ class PrediksiController extends Controller
         if ($response->successful()) {
             $predictedProba = $response->json();
             $probability = $predictedProba['predicted_proba_class_1'];
-            
+
             $noTeks = 0;
             if ($probability >= 0 && $probability < 0.1999) {
                 $noTeks = 1;

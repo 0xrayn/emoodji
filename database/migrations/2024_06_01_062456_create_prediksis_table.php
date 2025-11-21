@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('prediksis', function (Blueprint $table) {
             $table->id();
+            $table->integer('unlock_cost')->default(0);
             $table->double('predicted_proba_class_0');
             $table->double('predicted_proba_class_1');
             $table->integer('no_teks');

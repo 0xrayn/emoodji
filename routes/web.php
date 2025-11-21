@@ -7,6 +7,7 @@ use App\Http\Controllers\QuizController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ResultController;
+use App\Http\Controllers\UnlockController;
 use App\Http\Controllers\DiskusiController;
 use App\Http\Controllers\PrediksiController;
 use App\Http\Controllers\QuestionController;
@@ -17,7 +18,7 @@ use App\Http\Controllers\Auth\SocialiteController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 Route::get('/', [MainController::class, 'index'])->name('index');
-Route::get('/home', [AdminController::class, 'index'])->name('index');
+Route::get('/home', [AdminController::class, 'index'])->name('home');
 Route::post('/home', [PertanyaanController::class, 'subscribe'])->name('subscribe');
 
 Route::get('/auth/redirect', [SocialiteController::class, 'redirect']);
@@ -35,6 +36,10 @@ Route::middleware('auth')->group(function () {
     //     return view('user.kuis');
     // });
 
+    Route::post('/unlock', [UnlockController::class, 'unlock'])->name('unlock');
+    Route::post('/unlock/complete/{type}/{id}', [UnlockController::class, 'complete'])->name('unlock.complete');
+    Route::get('/unlock/status/{type}/{id}', [UnlockController::class, 'status'])->name('unlock.status');
+
     Route::get('/bot', [MainController::class, 'bot'])->name('bot');
     Route::match(['get', 'post'], '/botman', 'App\Http\Controllers\BotManController@handle');
 
@@ -43,8 +48,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/kuis', [MainController::class, 'kuis'])->name('kuis');
     Route::get('/kuis/rec', [MainController::class, 'rec'])->name('kuis.rec');
-    Route::get('/kuis/{quiz}', [MainController::class, 'kerjakan'])->name('kuis.kerjakan');
     Route::get('/kuis/{quiz}/result', [MainController::class, 'api'])->name('kuis.api');
+    Route::get('/kuis/{quiz}', [MainController::class, 'kerjakan'])->name('kuis.kerjakan');
     Route::get('/result', [ResultController::class, 'index'])->name('kuis.result');
 
     // Route::prefix('/kuis')->name('kuis.')->group(function () {
@@ -55,9 +60,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/game/TebakAngka', [GameController::class, 'TebakAngka'])->name('TebakAngka');
     Route::get('/game/MemoryGame', [GameController::class, 'Ingat'])->name('Ingat');
     Route::get('/game/TekaTekiBlok', [GameController::class, 'Puzzle'])->name('Puzzle');
-
+    Route::post('/reward/{points}', [GameController::class, 'reward'])->name('reward');
     Route::post('/cek-depresi', [PrediksiController::class, 'cekDepresi'])->name('cekDepresi');
-   
 });
 
 Route::prefix('dashboard')->name('admin.')->middleware(['auth', 'admin'])->group(function () {

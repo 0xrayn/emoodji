@@ -30,10 +30,10 @@
                 @endif
             </div>
             <div class="row g-4">
-                
+
 
                   @if ($kuis)
-                    @foreach ($kuis as $item)
+                    {{-- @foreach ($kuis as $item)
 
                         <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 60px;">
                             <div class="team-item">
@@ -43,12 +43,62 @@
                                 </div>
                             </div>
                         </div>
+                    @endforeach --}}
+                    @foreach ($kuis as $item)
+                        <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 60px;">
+                            <div class="team-item">
+                                <div class="team-text">
+                                    <h4 class="mb-0">{{ $item->quiz_name }}</h4>
+
+                                    <button class="btn btn-primary py-3 px-5 unlock-btn"
+                                            data-type="quiz"
+                                            data-id="{{ $item->id }}"
+                                            data-cost="{{ $item->unlock_cost ?? 10 }}">
+                                        Kerjakan
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     @endforeach
+
                   @endif
-                
+
             </div>
         </div>
     </div>
     <!-- Team End -->
+<script>
+document.querySelectorAll('.unlock-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+        const type = btn.dataset.type;
+        const id = btn.dataset.id;
+        const cost = btn.dataset.cost;
+
+        if(!confirm(`Apakah kamu ingin unlock ini dengan ${cost} reward?`)) return;
+
+        try {
+            const res = await fetch('{{ route("unlock") }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({type, id})
+            });
+            const data = await res.json();
+
+            if(res.ok){
+                alert(data.message);
+                window.location.href = `/kuis/${id}`; // langsung ke quiz
+            } else {
+                alert(data.error);
+            }
+        } catch(err){
+            alert('Terjadi kesalahan!');
+            console.error(err);
+        }
+    });
+});
+</script>
 
 @endsection

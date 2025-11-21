@@ -18,7 +18,7 @@ timerVisible.style.display = "none";
 resetButton.style.display = "none";
 blockPadding.style.padding = "0px";
 
-// Timer 
+// Timer
 let timer;
 let timeLeft = 60;
 let timeLeftElement = document.querySelector("#time");
@@ -69,6 +69,9 @@ function updateTimeDisplay() {
 
 // Start button function to display the blocks
 function startGame() {
+    // reward saat mulai main
+    if (typeof rewardPlay === "function") rewardPlay(5);
+
     startTimer();
     timerVisible.style.display = "";
     resetButton.style.display = "";
@@ -86,6 +89,7 @@ function startGame() {
     }
 }
 
+
 // Function to generate blocks
 function buildBlock(colors) {
     const element = document.createElement("div");
@@ -93,7 +97,6 @@ function buildBlock(colors) {
     element.classList.add('block');
     element.setAttribute("data-color", colors);
     element.setAttribute("data-revealed", "false");
-
 
     element.addEventListener("click", () => {
 
@@ -107,13 +110,12 @@ function buildBlock(colors) {
 
         if (!activeBlock) {
             activeBlock = element;
-
             return;
         }
 
-       const matchColor = activeBlock.getAttribute("data-color");
+        const matchColor = activeBlock.getAttribute("data-color");
 
-        // If color matched
+        // Jika warna cocok
         if (matchColor === colors) {
             activeBlock.setAttribute("data-revealed", "true");
             element.setAttribute("data-revealed", "true");
@@ -121,10 +123,14 @@ function buildBlock(colors) {
             activeBlock = null;
             showCount += 2;
 
+            // Check kemenangan
             if (showCount === blockCount) {
                 alert("You Win!");
                 clearInterval(timer);
                 timeLeftElement.innerHTML = `You Won! Reset to Play Again.`;
+
+                // <=== INI TEMPAT REWARD MENANG
+                if (typeof rewardWin === "function") rewardWin(10);
             }
             return;
         }
@@ -139,10 +145,11 @@ function buildBlock(colors) {
             activeBlock = null;
         }, 1000);
 
-    })
+    });
 
     return element;
 }
+
 
 function resetGame() {
     location.reload();

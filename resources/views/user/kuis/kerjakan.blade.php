@@ -60,10 +60,12 @@
         </div>
         <div class="complete_text">Kamu telah menyelesaikan kuis!</div>
         <div class="score_text">
-          
+
         </div>
         <div class="buttons">
-            <button class="restart">Ulangi Kuis</button>
+            <button class="restart" onclick="window.location='{{ route('kuis.kerjakan', $quiz->id) }}?restart=1'">
+                Ulangi Kuis
+            </button>
             <button class="quit">Keluar Kuis</button>
         </div>
     </div>

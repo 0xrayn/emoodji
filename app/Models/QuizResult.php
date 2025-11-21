@@ -2,28 +2,31 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class QuizResult extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'quiz_id',
+        'user_id',
+        'true',
+        'false',
+        'score',
+        'by',
+    ];
+
     protected $with = ['user', 'quiz'];
 
-    /**
-     * Get the user that owns the QuizResult
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function user(): BelongsTo
+    public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
     }
 
-    public function quiz(): BelongsTo
+    public function quiz()
     {
-        return $this->belongsTo(Quiz::class, 'quiz_id');
+        return $this->belongsTo(Quiz::class);
     }
 }

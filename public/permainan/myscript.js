@@ -20,23 +20,23 @@ let count;
  * @return {array}            The array shuffled
  */
 const shuffle = (arr) => {
-  let currentIndex = arr.length;
-  let temporaryValue;
-  let randomIndex;
+    let currentIndex = arr.length;
+    let temporaryValue;
+    let randomIndex;
 
-  // While there remain elements to shuffle...
-  while (currentIndex !== 0) {
-    // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
+    // While there remain elements to shuffle...
+    while (currentIndex !== 0) {
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
 
-    // And swap it with the current element.
-    temporaryValue = arr[currentIndex];
-    arr[currentIndex] = arr[randomIndex];
-    arr[randomIndex] = temporaryValue;
-  }
+        // And swap it with the current element.
+        temporaryValue = arr[currentIndex];
+        arr[currentIndex] = arr[randomIndex];
+        arr[randomIndex] = temporaryValue;
+    }
 
-  return arr;
+    return arr;
 };
 
 /**
@@ -45,13 +45,13 @@ const shuffle = (arr) => {
  * @param {number} cellId     The id of the cell to hide
  */
 const hideCell = (cellId) => {
-  cells[cellId].setAttribute('cell-status', 'deactivated');
+    cells[cellId].setAttribute('cell-status', 'deactivated');
 
-  if (cells[cellId].innerHTML === '-1') {
-    cells[cellId].style.display = 'none';
-  } else {
-    cells[cellId].className = 'cell-disappear-animation gameTable cellGradient';
-  }
+    if (cells[cellId].innerHTML === '-1') {
+        cells[cellId].style.display = 'none';
+    } else {
+        cells[cellId].className = 'cell-disappear-animation gameTable cellGradient';
+    }
 };
 
 /**
@@ -95,8 +95,8 @@ const canBeRemoved = (cellId) => isFreeLeft(cellId) || isFreeRight(cellId);
  * @param {number} cellId     The id of the cell to select
  */
 const makeSelected = (cellId) => {
-  cells[cellId].className = 'gameTable selectedCellGradient';
-  selectedCell = cellId;
+    cells[cellId].className = 'gameTable selectedCellGradient';
+    selectedCell = cellId;
 };
 
 /**
@@ -105,15 +105,15 @@ const makeSelected = (cellId) => {
  * @param {number} cellId     The id of the cell to deselect
  */
 const makeDeselected = (cellId) => {
-  cells[cellId].className = 'gameTable cellGradient';
+    cells[cellId].className = 'gameTable cellGradient';
 };
 
 /**
  * Update move counters UI
  */
 const updateMoveCounters = () => {
-  document.getElementById('correctMovesCounter').innerHTML = `Valid moves: <span style="color:green">${correctMoves}</span> | `;
-  document.getElementById('wrongMovesCounter').innerHTML = `Invalid moves: <span style="color:red">${wrongMoves}</span> | `;
+    document.getElementById('correctMovesCounter').innerHTML = `Valid moves: <span style="color:green">${correctMoves}</span> | `;
+    document.getElementById('wrongMovesCounter').innerHTML = `Invalid moves: <span style="color:red">${wrongMoves}</span> | `;
 };
 
 /**
@@ -122,13 +122,13 @@ const updateMoveCounters = () => {
  * @param {string} wat        Whether the move was 'correct' or 'wrong'
  */
 const countMove = (wat) => {
-  if (wat === 'correct') {
-    correctMoves += 1;
-  } else if (wat === 'wrong') {
-    wrongMoves += 1;
-  }
+    if (wat === 'correct') {
+        correctMoves += 1;
+    } else if (wat === 'wrong') {
+        wrongMoves += 1;
+    }
 
-  updateMoveCounters();
+    updateMoveCounters();
 };
 
 /**
@@ -137,30 +137,30 @@ const countMove = (wat) => {
  * @param {boolean} win       Whether the user has won or not
  */
 const endGame = (win) => {
-  document.getElementById('theTable').parentNode.removeChild(document.getElementById('theTable'));
-  document.getElementById('bottomBar').parentNode.removeChild(document.getElementById('bottomBar'));
+    document.getElementById('theTable').parentNode.removeChild(document.getElementById('theTable'));
+    document.getElementById('bottomBar').parentNode.removeChild(document.getElementById('bottomBar'));
 
-  const totalMoves = correctMoves + wrongMoves;
+    const totalMoves = correctMoves + wrongMoves;
 
-  let correctPercentage = 0;
-  let wrongPercentage = 0;
+    let correctPercentage = 0;
+    let wrongPercentage = 0;
 
-  if (totalMoves !== 0) {   // to prevent division by 0
-    correctPercentage = (correctMoves / totalMoves) * 100;
-    wrongPercentage = 100 - correctPercentage;
+    if (totalMoves !== 0) {   // to prevent division by 0
+        correctPercentage = (correctMoves / totalMoves) * 100;
+        wrongPercentage = 100 - correctPercentage;
 
-    // Round to 2 decimal places
-    correctPercentage = +correctPercentage.toFixed(2);
-    wrongPercentage = +wrongPercentage.toFixed(2);
-  }
+        // Round to 2 decimal places
+        correctPercentage = +correctPercentage.toFixed(2);
+        wrongPercentage = +wrongPercentage.toFixed(2);
+    }
 
-  let message = (win) ? 'You win :D\n' : 'You lose! :(\n\n(╯°□°）╯︵ ƃuoɾɥɐW';
-  message += `\nTotal time: ${totalTime - count} seconds\nValid moves: ${correctPercentage}%\nInvalid moves: ${wrongPercentage}%`;
+    let message = (win) ? 'You win :D\n' : 'You lose! :(\n\n(╯°□°）╯︵ ƃuoɾɥɐW';
+    message += `\nTotal time: ${totalTime - count} seconds\nValid moves: ${correctPercentage}%\nInvalid moves: ${wrongPercentage}%`;
 
-  // eslint-disable-next-line no-alert
-  alert(message);
+    // eslint-disable-next-line no-alert
+    alert(message);
 
-  window.location = 'index.html';
+    window.location = 'index.html';
 };
 
 /**
@@ -171,15 +171,15 @@ const endGame = (win) => {
  *                            `false` otherwise
  */
 const rowHasActiveCell = (rowId) => {
-  const row = table.rows[rowId].cells;
+    const row = table.rows[rowId].cells;
 
-  for (let i = 0; i < row.length; i += 1) {
-    if (cellIsActive(row[i].id)) {
-      return true;
+    for (let i = 0; i < row.length; i += 1) {
+        if (cellIsActive(row[i].id)) {
+            return true;
+        }
     }
-  }
 
-  return false;
+    return false;
 };
 
 /**
@@ -188,13 +188,13 @@ const rowHasActiveCell = (rowId) => {
  * @return {boolean}          Whether the board is empty or not
  */
 const boardEmpty = () => {
-  for (let i = 0; i < tableHeight; i += 1) {
-    if (rowHasActiveCell(i)) {
-      return false;
+    for (let i = 0; i < tableHeight; i += 1) {
+        if (rowHasActiveCell(i)) {
+            return false;
+        }
     }
-  }
 
-  return true;
+    return true;
 };
 
 /**
@@ -204,24 +204,24 @@ const boardEmpty = () => {
  * @return {number}           The id of the leftmost active cell of the row
  */
 const getLeft = (rowId) => {
-  const row = table.rows[rowId].cells;
+    const row = table.rows[rowId].cells;
 
-  for (let i = 0; i < row.length; i += 1) {
-    if (cellIsActive(row[i].id)) {
-      return row[i].id;
+    for (let i = 0; i < row.length; i += 1) {
+        if (cellIsActive(row[i].id)) {
+            return row[i].id;
+        }
     }
-  }
 };
 
 /* Return the id of the RIGHT_MOST ACTIVE CELL OF THE ROW WITH ID rowId */
 const getRight = (rowId) => {
-  const row = table.rows[rowId].cells;
+    const row = table.rows[rowId].cells;
 
-  for (let i = row.length; i > 0; i -= 1) {
-    if (cellIsActive(row[i - 1].id)) {
-      return row[i - 1].id;
+    for (let i = row.length; i > 0; i -= 1) {
+        if (cellIsActive(row[i - 1].id)) {
+            return row[i - 1].id;
+        }
     }
-  }
 };
 
 /**
@@ -231,27 +231,27 @@ const getRight = (rowId) => {
  * @return {number}           The number of tiles that are available with the given number in them
  */
 const countAvailable = (num) => {
-  let counter = 0;
-  const numOfRows = table.rows.length;
+    let counter = 0;
+    const numOfRows = table.rows.length;
 
-  for (let i = 0; i < numOfRows; i += 1) {
-    if (rowHasActiveCell(i)) {
-      const leftCellId = getLeft(i);
-      const rightCellId = getRight(i);
+    for (let i = 0; i < numOfRows; i += 1) {
+        if (rowHasActiveCell(i)) {
+            const leftCellId = getLeft(i);
+            const rightCellId = getRight(i);
 
-      // eslint-disable-next-line eqeqeq
-      if (cells[leftCellId].innerHTML == num) {
-        counter += 1;
-      }
+            // eslint-disable-next-line eqeqeq
+            if (cells[leftCellId].innerHTML == num) {
+                counter += 1;
+            }
 
-      // eslint-disable-next-line eqeqeq
-      if (cells[rightCellId].innerHTML == num && rightCellId !== leftCellId) {
-        counter += 1;
-      }
+            // eslint-disable-next-line eqeqeq
+            if (cells[rightCellId].innerHTML == num && rightCellId !== leftCellId) {
+                counter += 1;
+            }
+        }
     }
-  }
 
-  return counter;
+    return counter;
 };
 
 /**
@@ -261,23 +261,23 @@ const countAvailable = (num) => {
  * @return {boolean}          Whether it is stuck or not
  */
 const isStuck = () => {
-  const numOfRows = table.rows.length;
+    const numOfRows = table.rows.length;
 
-  for (let i = 0; i < numOfRows; i += 1) {
-    if (rowHasActiveCell(i)) {
-      if (countAvailable(cells[getLeft(i)].innerHTML) > 1) {
-        // console.log(`More than one cells with ${cells[getLeft(i)].innerHTML} can be removed`);
-        return false;
-      }
+    for (let i = 0; i < numOfRows; i += 1) {
+        if (rowHasActiveCell(i)) {
+            if (countAvailable(cells[getLeft(i)].innerHTML) > 1) {
+                // console.log(`More than one cells with ${cells[getLeft(i)].innerHTML} can be removed`);
+                return false;
+            }
 
-      if (countAvailable(cells[getRight(i)].innerHTML) > 1) {
-        // console.log(`More than one cells with ${cells[getRight(i)].innerHTML} can be removed`);
-        return false;
-      }
+            if (countAvailable(cells[getRight(i)].innerHTML) > 1) {
+                // console.log(`More than one cells with ${cells[getRight(i)].innerHTML} can be removed`);
+                return false;
+            }
+        }
     }
-  }
 
-  return true;
+    return true;
 };
 
 /* Generate a random color
@@ -285,14 +285,14 @@ const isStuck = () => {
  * @return {string}           A random hex color
  */
 const getRandomColor = () => {
-  const letters = '0123456789ABCDEF'.split('');
-  let color = '#';
+    const letters = '0123456789ABCDEF'.split('');
+    let color = '#';
 
-  for (let i = 0; i < 6; i += 1) {
-    color += letters[Math.round(Math.random() * 15)];
-  }
+    for (let i = 0; i < 6; i += 1) {
+        color += letters[Math.round(Math.random() * 15)];
+    }
 
-  return color;
+    return color;
 };
 
 /**
@@ -301,11 +301,11 @@ const getRandomColor = () => {
  * @param {number} limit      The maximum number (and size of array)
  */
 const makeGlobalColorsArray = (limit) => {
-  colors = [];
+    colors = [];
 
-  for (let i = 0; i < limit; i += 1) {
-    colors.push(getRandomColor());
-  }
+    for (let i = 0; i < limit; i += 1) {
+        colors.push(getRandomColor());
+    }
 };
 
 /**
@@ -316,21 +316,21 @@ const makeGlobalColorsArray = (limit) => {
  * @param {number} counter
  */
 const addCell = (row, innerHTML, counter) => {
-  const col = row.insertCell(row.childElementCount);
-  col.innerHTML = innerHTML;
-  cells[counter] = col;
-  col.id = counter;
-  col.style.opacity = 0;
-  col.style.border = `2px solid ${colors[innerHTML]}`;
-  col.setAttribute('class', 'gameTable');
-  col.setAttribute('onclick', `cellPressed(${counter});`);
-  col.setAttribute('onmouseover', `mouseOver(${counter});`);
-  col.setAttribute('onmouseout', `mouseOut(${counter});`);
-  col.setAttribute('cell-status', 'active');    // for checking if cell is active
+    const col = row.insertCell(row.childElementCount);
+    col.innerHTML = innerHTML;
+    cells[counter] = col;
+    col.id = counter;
+    col.style.opacity = 0;
+    col.style.border = `2px solid ${colors[innerHTML]}`;
+    col.setAttribute('class', 'gameTable');
+    col.setAttribute('onclick', `cellPressed(${counter});`);
+    col.setAttribute('onmouseover', `mouseOver(${counter});`);
+    col.setAttribute('onmouseout', `mouseOut(${counter});`);
+    col.setAttribute('cell-status', 'active');    // for checking if cell is active
 
-  if (innerHTML === -1) {                       // for hiding cells when shuffling board
-    hideCell(counter);
-  }
+    if (innerHTML === -1) {                       // for hiding cells when shuffling board
+        hideCell(counter);
+    }
 };
 
 /**
@@ -339,17 +339,17 @@ const addCell = (row, innerHTML, counter) => {
  * @param {array} cellNumbers   An array containing the cell numbers of the table to create
  */
 const createTable = (cellNumbers) => {
-  cells = new Array(tableHeight * tableWidth);
-  let counter = 0;
+    cells = new Array(tableHeight * tableWidth);
+    let counter = 0;
 
-  for (let i = 0; i < tableHeight; i += 1) {
-    const row = table.insertRow(i);
-    row.setAttribute('class', 'gameTable');
-    for (let j = 0; j < tableWidth; j += 1) {
-      addCell(row, cellNumbers[counter], counter);
-      counter += 1;
+    for (let i = 0; i < tableHeight; i += 1) {
+        const row = table.insertRow(i);
+        row.setAttribute('class', 'gameTable');
+        for (let j = 0; j < tableWidth; j += 1) {
+            addCell(row, cellNumbers[counter], counter);
+            counter += 1;
+        }
     }
-  }
 };
 
 /**
@@ -358,52 +358,52 @@ const createTable = (cellNumbers) => {
  * @param {number} i
  */
 const animateTable = (i) => {
-  cells[i].style.opacity = 1;
-  cells[i].className = 'cell-move-in-animation gameTable cellGradient';
+    cells[i].style.opacity = 1;
+    cells[i].className = 'cell-move-in-animation gameTable cellGradient';
 
-  if (i > 0) {
-    setTimeout(animateTable, 10, i - 1);
-  }
+    if (i > 0) {
+        setTimeout(animateTable, 10, i - 1);
+    }
 };
 
 /**
  * Shuffle the board
  */
 const shuffleBoard = () => {
-  let activeCellNumbers = [];
+    let activeCellNumbers = [];
 
-  // Copy active cells to new array
-  for (let i = 0; i < cells.length; i += 1) {
-    if (cellIsActive(i)) {
-      activeCellNumbers.push(cells[i].innerHTML);
+    // Copy active cells to new array
+    for (let i = 0; i < cells.length; i += 1) {
+        if (cellIsActive(i)) {
+            activeCellNumbers.push(cells[i].innerHTML);
+        }
     }
-  }
 
-  // Shuffle new array
-  activeCellNumbers = shuffle(activeCellNumbers);
+    // Shuffle new array
+    activeCellNumbers = shuffle(activeCellNumbers);
 
-  const numOfCellsToAnimate = activeCellNumbers.length;
+    const numOfCellsToAnimate = activeCellNumbers.length;
 
-  // Add -1 to empty spaces of new array
-  for (let i = activeCellNumbers.length; i < cells.length; i += 1) {
-    activeCellNumbers.push(-1);
-  }
+    // Add -1 to empty spaces of new array
+    for (let i = activeCellNumbers.length; i < cells.length; i += 1) {
+        activeCellNumbers.push(-1);
+    }
 
-  // Delete rows from current table (to add new ones)
-  while (table.rows.length > 0) {
-    table.deleteRow(0);
-  }
+    // Delete rows from current table (to add new ones)
+    while (table.rows.length > 0) {
+        table.deleteRow(0);
+    }
 
-  // Add new table with new cells
-  createTable(activeCellNumbers);
+    // Add new table with new cells
+    createTable(activeCellNumbers);
 
-  selectedCell = -1;  // resetting this, no cells are selected after shuffling le board
+    selectedCell = -1;  // resetting this, no cells are selected after shuffling le board
 
-  if (isStuck()) {
-    shuffleBoard();
-  }
+    if (isStuck()) {
+        shuffleBoard();
+    }
 
-  animateTable(numOfCellsToAnimate - 1);
+    animateTable(numOfCellsToAnimate - 1);
 };
 
 /**
@@ -412,43 +412,43 @@ const shuffleBoard = () => {
  * @param {number} cellId     The id of the cell that was clicked
  */
 const cellPressed = (cellId) => {
-  if (cellIsActive(cellId)) {
-    if (cellId !== selectedCell && selectedCell !== -1) {
-      // Check if the selected cell can be removed, and highlight it or do nothing
-      if (canBeRemoved(cellId)) {
-        if (cells[selectedCell].innerHTML === cells[cellId].innerHTML) {
-          // User found a match, hide cells!
-          hideCell(selectedCell);
-          hideCell(cellId);
-          selectedCell = -1;
+    if (cellIsActive(cellId)) {
+        if (cellId !== selectedCell && selectedCell !== -1) {
+            // Check if the selected cell can be removed, and highlight it or do nothing
+            if (canBeRemoved(cellId)) {
+                if (cells[selectedCell].innerHTML === cells[cellId].innerHTML) {
+                    // User found a match, hide cells!
+                    hideCell(selectedCell);
+                    hideCell(cellId);
+                    selectedCell = -1;
 
-          countMove('correct');
+                    countMove('correct');
 
-          if (boardEmpty()) {               // checking if user has won the game
-            endGame(true);
-            return;
-          }
+                    if (boardEmpty()) {               // checking if user has won the game
+                        endGame(true);
+                        return;
+                    }
 
-          if (isStuck()) {                  // because cells changed, must check if game is stuck
-            shuffleBoard();
-          }
-        } else {                            // selected 2 cells with different values, so wrong move
-          makeDeselected(selectedCell);     // change previously selected cell to default color
-          makeSelected(cellId);             // select the clicked cell!
-          countMove('wrong');
+                    if (isStuck()) {                  // because cells changed, must check if game is stuck
+                        shuffleBoard();
+                    }
+                } else {                            // selected 2 cells with different values, so wrong move
+                    makeDeselected(selectedCell);     // change previously selected cell to default color
+                    makeSelected(cellId);             // select the clicked cell!
+                    countMove('wrong');
+                }
+            } else {                              // clicked a cell that cannot be removed, so wrong move
+                makeDeselected(selectedCell);       // deselect the selected cell
+                selectedCell = -1;
+                countMove('wrong');
+            }
+        } else if (cellId === selectedCell) {   // clicked on the same cell twice, deselecting it
+            makeDeselected(cellId);               // (does not count as a wrong move)
+            selectedCell = -1;
+        } else if (canBeRemoved(cellId)) {      // there is no selected cell, selecting the clicked one
+            makeSelected(cellId);
         }
-      } else {                              // clicked a cell that cannot be removed, so wrong move
-        makeDeselected(selectedCell);       // deselect the selected cell
-        selectedCell = -1;
-        countMove('wrong');
-      }
-    } else if (cellId === selectedCell) {   // clicked on the same cell twice, deselecting it
-      makeDeselected(cellId);               // (does not count as a wrong move)
-      selectedCell = -1;
-    } else if (canBeRemoved(cellId)) {      // there is no selected cell, selecting the clicked one
-      makeSelected(cellId);
     }
-  }
 };
 
 /**
@@ -457,9 +457,9 @@ const cellPressed = (cellId) => {
  * @param {number} cellId       The id of the cell to change its appearance
  */
 const mouseOver = (cellId) => {
-  if (cellId !== selectedCell && cellIsActive(cellId) && canBeRemoved(cellId)) {
-    cells[cellId].className = 'gameTable mouseOverCellGradient';
-  }
+    if (cellId !== selectedCell && cellIsActive(cellId) && canBeRemoved(cellId)) {
+        cells[cellId].className = 'gameTable mouseOverCellGradient';
+    }
 };
 
 /**
@@ -468,16 +468,16 @@ const mouseOver = (cellId) => {
  * @param {number} cellId       The id of the cell to change its appearance
  */
 const mouseOut = (cellId) => {
-  if (cellId !== selectedCell && cellIsActive(cellId) && canBeRemoved(cellId)) {
-    cells[cellId].className = 'gameTable cellGradient';
-  }
+    if (cellId !== selectedCell && cellIsActive(cellId) && canBeRemoved(cellId)) {
+        cells[cellId].className = 'gameTable cellGradient';
+    }
 };
 
 const gimmeTitle = () => {
-  document.getElementById('title').innerHTML = '&#3900;&#32;&#12388;&#32;&#9685;&#95;&#9685;&#32;&#3901;&#12388; Mahjong';
-  setTimeout(() => {
-    document.getElementById('title').innerHTML = 'Mahjong';
-  }, 500);
+    document.getElementById('title').innerHTML = '&#3900;&#32;&#12388;&#32;&#9685;&#95;&#9685;&#32;&#3901;&#12388; Mahjong';
+    setTimeout(() => {
+        document.getElementById('title').innerHTML = 'Mahjong';
+    }, 500);
 };
 
 /**
@@ -489,75 +489,98 @@ const gimmeTitle = () => {
  * @return {array}                The randomized array for the game
  */
 const makeMahjongArray = (leWidth, leHeight, difficulty) => {
-  const numbers = new Array(leWidth * leHeight);
-  const limit = numbers.length / (2 ** difficulty);     // 8, 4 or 2
+    const numbers = new Array(leWidth * leHeight);
+    const limit = numbers.length / (2 ** difficulty);     // 8, 4 or 2
 
-  const iLoops = 2 ** difficulty;
-  for (let i = 0; i < iLoops; i += 1) {
-    for (let j = 0; j < limit; j += 1) {
-      numbers[(i * limit) + j] = j;
+    const iLoops = 2 ** difficulty;
+    for (let i = 0; i < iLoops; i += 1) {
+        for (let j = 0; j < limit; j += 1) {
+            numbers[(i * limit) + j] = j;
+        }
     }
-  }
 
-  return shuffle(numbers);
+    return shuffle(numbers);
 };
 
 /**
  * Create "New Game" button
  */
 const createNewGameButton = () => {
-  const button = document.createElement('input');
-  button.type = 'button';
-  button.value = 'New game';
-  button.onclick = () => {
-    window.location = 'index.html';
-  };
-  document.getElementById('nGButton').appendChild(button);
+    const button = document.createElement('input');
+    button.type = 'button';
+    button.value = 'New Game';
+    button.onclick = () => {
+        // hapus table lama
+        const oldTable = document.getElementById('theTable');
+        if(oldTable) oldTable.remove();
+
+        // reset variabel global
+        selectedCell = -1;
+        cells = [];
+
+        // reset scoreboard
+        document.getElementById('correctMovesCounter').textContent = '';
+        document.getElementById('wrongMovesCounter').textContent = '';
+        document.getElementById('timeCounter').textContent = '';
+
+        // tampilkan kembali slider/div
+        const div = document.getElementById('startscreenDiv');
+        if(div) div.style.display = 'block';
+
+        // mulai game baru
+        startGame();
+    };
+
+    const nGButtonContainer = document.getElementById('nGButton');
+    nGButtonContainer.innerHTML = '';
+    nGButtonContainer.appendChild(button);
 };
+
+
 
 /**
  * Add the timer that counts the time, on the bottom bar :D
  */
 const addTimerToBottomBar = () => {
-  document.getElementById('timeCounter').innerHTML = `${count} seconds`;
+    document.getElementById('timeCounter').innerHTML = `${count} seconds`;
 };
 
 /* Function to initialize move counters */
 const initMoveCounters = () => {
-  wrongMoves = 0;
-  correctMoves = 0;
-  updateMoveCounters();
+    wrongMoves = 0;
+    correctMoves = 0;
+    updateMoveCounters();
 };
 
 /**
  * Countdown timer
  */
 const timer = () => {
-  count -= 1;
+    count -= 1;
 
-  // If time is up, user lost the game
-  if (count <= 0) {
-    clearInterval(counter);
-    endGame(false);
-    return;
-  }
+    // If time is up, user lost the game
+    if (count <= 0) {
+        clearInterval(counter);
+        endGame(false);
+        return;
+    }
 
-  // If user didn't lose the game
-  document.getElementById('timeCounter').innerHTML = `${count}${(count === 1) ? ' second' : ' seconds'}`;
-  if (count === 10) {
-    document.getElementsByTagName('body')[0].className = 'timeIsUp-animation';
-  }
+    // If user didn't lose the game
+    document.getElementById('timeCounter').innerHTML = `${count}${(count === 1) ? ' second' : ' seconds'}`;
+    if (count === 10) {
+        document.getElementsByTagName('body')[0].className = 'timeIsUp-animation';
+    }
 };
 
 /**
  * Start counting down until game over
  */
 const initTimer = () => {
-  totalTime = 300;          // 300 seconds = 5 minutes
-  count = totalTime;
-  counter = setInterval(timer, 1000);
+    totalTime = 300;          // 300 seconds = 5 minutes
+    count = totalTime;
+    counter = setInterval(timer, 1000);
 
-  addTimerToBottomBar();
+    addTimerToBottomBar();
 };
 
 /**
@@ -565,51 +588,59 @@ const initTimer = () => {
  * (below the mahjong board)
  */
 const addThingsToBottomBar = () => {
-  createNewGameButton();
-  initTimer();
-  initMoveCounters();
-  document.getElementById('bottomBar').className = 'bottomBar-animation';
+    createNewGameButton();
+    initTimer();
+    initMoveCounters();
+    document.getElementById('bottomBar').className = 'bottomBar-animation';
 };
 
 /**
  * Start the game
  */
 const startGame = () => {
-  // Get variables from html page
-  const size = document.getElementById('sizeSlider').value;
+    // Ambil variabel dari HTML
+    const sizeSlider = document.getElementById('sizeSlider');
+    const difficultySlider = document.getElementById('difficultySlider');
+    const size = sizeSlider ? sizeSlider.value : 2;
+    const difficulty = difficultySlider ? 4 - difficultySlider.value : 2;
 
-  // Subtract from 4, so 3 is hardest, 1 is easiest (the opposite of the slider's value)
-  const difficulty = 4 - document.getElementById('difficultySlider').value;
+    // Hapus settings (atau sembunyikan supaya slider tidak null saat reset)
+    const div = document.getElementById('startscreenDiv');
+    if(div) div.style.display = 'none';
 
-  // Remove settings
-  const div = document.getElementById('startscreenDiv');
-  div.parentNode.removeChild(div);
+    // Buat table
+    table = document.createElement('table');  // global variable
+    table.className = 'gameTable';
+    table.id = 'theTable';
 
-  // Create the table
-  table = document.createElement('table');  // global variable
-  table.setAttribute('class', 'gameTable');
-  table.id = 'theTable';
+    tableHeight = 2 * size;
+    tableWidth = 4 * size;
 
-  tableHeight = 2 * size;
-  tableWidth = 4 * size;
+    const numbers = makeMahjongArray(tableWidth, tableHeight, difficulty);
+    makeGlobalColorsArray(numbers.length / (2 ** difficulty));
 
-  const numbers = makeMahjongArray(tableWidth, tableHeight, difficulty);
-  makeGlobalColorsArray(numbers.length / (2 ** difficulty));
+    createTable(numbers);    // fungsi asli membuat global array cells
 
-  createTable(numbers);    // the function also creates the global array cells
+    selectedCell = -1;       // reset selected
 
-  selectedCell = -1;       // global variable with selected cell
+    // Shuffle board kalau tidak ada moves
+    if (isStuck()) shuffleBoard();
 
-  // Shuffle the board if there are no moves to make
-  if (isStuck()) {
-    shuffleBoard();
-  }
+    document.getElementById('divTable').appendChild(table);
+    animateTable(cells.length - 1);
 
-  // Add the table to the page
-  document.getElementById('divTable').appendChild(table);
+    addThingsToBottomBar();
 
-  animateTable(cells.length - 1);
-
-  // Add the new game button and other things to the bottom bar
-  addThingsToBottomBar();
+    // ✨ Reward main game (misal 5)
+    if (typeof rewardPlay === 'function') {
+        rewardPlay(5);
+    }
 };
+
+
+// Panggilan saat menang, misal di akhir logika game
+function onWin() {
+    if (typeof rewardWin === 'function') {
+        rewardWin(10); // reward menang 10
+    }
+}

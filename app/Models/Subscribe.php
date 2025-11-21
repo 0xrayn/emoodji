@@ -9,7 +9,5 @@ class Subscribe extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'email',
-    ];
+    protected $fillable = ['email'];
 }

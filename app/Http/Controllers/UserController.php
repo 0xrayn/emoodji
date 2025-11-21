@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-
+use App\Models\Quiz;
+use App\Models\Question;
+use App\Models\QuizResult;
 class UserController extends Controller
 {
     public function index()

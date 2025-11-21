@@ -91,4 +91,10 @@ class QuizController extends Controller
 
         return back()->with('success', "Kuis Berhasil Dihapus!");
     }
+
+    public function assessment()
+    {
+        $quizzes = Quiz::all();
+        return view('assessment.index', compact('quizzes'));
+    }
 }
