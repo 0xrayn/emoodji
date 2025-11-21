@@ -10,6 +10,11 @@
 @endsection
 
 @section('content')
+<div class="mb-3">
+    <span class="badge bg-success">
+        Reward: <span id="reward-badge">{{ Auth::user()->reward }}</span> Points
+    </span>
+</div>
 
 <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Musik</button>
 

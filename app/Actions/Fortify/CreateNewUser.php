@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Actions\Fortify;
 
 use App\Models\User;
@@ -23,6 +22,7 @@ class CreateNewUser implements CreatesNewUsers
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => $this->passwordRules(),
+            'gender' => ['nullable', 'in:male,female'],
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ])->validate();
 
@@ -30,6 +30,10 @@ class CreateNewUser implements CreatesNewUsers
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
+            'usertype' => 'user', // default user
+            'gender' => $input['gender'] ?? null,
+            'email_verified_at' => now(),
+            'avatar' => config('chatify.user_avatar.default'),
         ]);
     }
 }

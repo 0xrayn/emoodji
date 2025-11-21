@@ -25,12 +25,13 @@ class DatabaseSeeder extends Seeder
                 'usertype' => 'admin',
                 'password' => Hash::make('emoodji'),
                 'email_verified_at' => now(),
-                'reward' => 0
+                'reward' => 0,
             ],
             [
                 'name' => "Testing",
                 'email' => 'testing@gmail.com',
                 'usertype' => 'user',
+                'gender' => 'male',
                 'password' => Hash::make('testing'),
                 'email_verified_at' => now(),
                 'reward' => 50 // user awal dapat 50 reward

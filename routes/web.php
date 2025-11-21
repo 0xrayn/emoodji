@@ -9,6 +9,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ResultController;
 use App\Http\Controllers\UnlockController;
 use App\Http\Controllers\DiskusiController;
+use App\Http\Controllers\RewardController;
 use App\Http\Controllers\PrediksiController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\DashboardController;
@@ -60,7 +61,7 @@ Route::middleware('auth')->group(function () {
     // Route::prefix('/kuis')->name('kuis.')->group(function () {
     //     Route::get('/result', [ResultController::class, 'index'])->name('result');
     // });
-
+    Route::post('/reward/add', [App\Http\Controllers\RewardController::class, 'addReward'])->name('reward.add');
     Route::get('/game/Mahjong', [GameController::class, 'mahjong'])->name('mahjong');
     Route::get('/game/TebakAngka', [GameController::class, 'TebakAngka'])->name('TebakAngka');
     Route::get('/game/MemoryGame', [GameController::class, 'Ingat'])->name('Ingat');

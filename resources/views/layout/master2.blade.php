@@ -7,6 +7,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Favicon -->
     <link href=" {{ asset('/img/favicon.ico ') }}" rel="icon">
@@ -137,20 +138,21 @@
     @else
         <style>
             :root {
-                /* Default (no gender) => yellow warm theme */
-                --primary: #FFD166;
-                /* main yellow */
-                --accent: #FFE08A;
-                /* lighter yellow */
-                --light: #FFF6DF;
+                /* Dominant blue (male) - not everything, just primary/accents */
+                --primary: #355EFC;
+                /* main blue */
+                --accent: #6B8CFF;
+                /* lighter blue used for hover/gradients */
+                --light: #DFE4FD;
                 /* light background accents */
-                --dark: #a88512;
-                /* dark text variant */
-                --highlight: #FFF0B3;
+                --dark: #011A41;
+                /* dark text */
+                --highlight: #BBD3FF;
+                /* subtle highlight */
                 --gender-color: var(--primary);
-                --primary-rgb: 255,
-                    209,
-                    102;
+                --primary-rgb: 53,
+                    94,
+                    252;
             }
 
             .footer {

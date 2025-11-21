@@ -18,7 +18,7 @@
             <div class="row g-4">
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="team-item">
-                        <img class="rounded img-fluid" src="img/team-2.jpg" alt="">
+                        <img class="rounded img-fluid" src="img/team-1.jpg" alt="">
                         <div class="team-text">
                             <h5 class="mb-0">Ryan Dwi Wicaksono</h5>
                             <div class="team-social d-flex">
@@ -30,7 +30,7 @@
 
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="team-item">
-                        <img class="rounded img-fluid" src="img/team-2.jpg" alt="">
+                        <img class="rounded img-fluid" src="img/team-1.jpg" alt="">
                         <div class="team-text">
                             <h5 class="mb-0">Qinthara Sadida Azka</h5>
                             <div class="team-social d-flex">
@@ -42,7 +42,7 @@
 
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
                     <div class="team-item">
-                        <img class="rounded img-fluid" src="img/team-2.jpg" alt="">
+                        <img class="rounded img-fluid" src="img/team-1.jpg" alt="">
                         <div class="team-text">
                             <h5 class="mb-0">Wesly M Sihombing</h5>
                                 <div class="team-social d-flex">
@@ -54,7 +54,7 @@
 
                   <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
                     <div class="team-item">
-                        <img class="rounded img-fluid" src="img/team-2.jpg" alt="">
+                        <img class="rounded img-fluid" src="img/team-1.jpg" alt="">
                         <div class="team-text">
                             <h5 class="mb-0">Ulil Albab K. N.</h5>
                             <div class="team-social d-flex">
@@ -66,7 +66,7 @@
 
                   <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
                     <div class="team-item">
-                        <img class="rounded img-fluid" src="img/team-2.jpg" alt="">
+                        <img class="rounded img-fluid" src="img/team-1.jpg" alt="">
                         <div class="team-text">
                             <h5 class="mb-0">Muhammad Abdul Aziz</h5>
                             <div class="team-social d-flex">
