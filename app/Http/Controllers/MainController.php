@@ -8,6 +8,7 @@ use App\Models\QuizResult;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\UnlockSession;
+use App\Models\PrediksiFeature;
 use App\Models\User;
 
 class MainController extends Controller
@@ -16,6 +17,27 @@ class MainController extends Controller
     public function index()
     {
         return view('index');
+    }
+
+    public function assesment()
+    {
+        $user = Auth::user();
+
+        // Data Kuis
+        $kuis = Quiz::get();
+
+        // Data Prediksi
+        $feature = PrediksiFeature::first();
+        $session = UnlockSession::where('user_id', $user->id)
+            ->where('unlockable_type', PrediksiFeature::class)
+            ->where('unlockable_id', $feature->id)
+            ->first();
+
+        return view('user.assessment.index', [
+            'kuis' => $kuis,
+            'feature' => $feature,
+            'session' => $session,
+        ]);
     }
 
     public function tes()
@@ -56,11 +78,6 @@ class MainController extends Controller
     public function team()
     {
         return view('team');
-    }
-
-    public function prediksi()
-    {
-        return view('user.pred.index');
     }
 
     public function kuis()

@@ -27,7 +27,7 @@ return new class extends Migration
             $table->enum('theme', ['blue', 'pink'])->nullable();
             $table->string('avatar')->default(config('chatify.user_avatar.default'));
             $table->boolean('dark_mode')->default(0);
-                $table->string('messenger_color')->nullable();
+            $table->string('messenger_color')->nullable();
             $table->integer('reward')->default(0);
             $table->timestamps();
         });

@@ -44,7 +44,12 @@ Route::middleware('auth')->group(function () {
     Route::match(['get', 'post'], '/botman', 'App\Http\Controllers\BotManController@handle');
 
     Route::get('/game', [MainController::class, 'permainan'])->name('permainan');
-    Route::get('/prediksi', [MainController::class, 'prediksi'])->name('prediksi');
+    // Route::get('/prediksi', [MainController::class, 'prediksi'])->name('prediksi');
+    Route::get('/assessment', [MainController::class, 'assesment'])->name('assessment');
+
+    Route::get('/prediksi', [PrediksiController::class, 'index'])->name('prediksi.index');
+    Route::post('/prediksi/unlock', [PrediksiController::class, 'unlock'])->name('prediksi.unlock');
+    Route::post('/prediksi/submit', [PrediksiController::class, 'submit'])->name('prediksi.submit');
 
     Route::get('/kuis', [MainController::class, 'kuis'])->name('kuis');
     Route::get('/kuis/rec', [MainController::class, 'rec'])->name('kuis.rec');
@@ -61,7 +66,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/game/MemoryGame', [GameController::class, 'Ingat'])->name('Ingat');
     Route::get('/game/TekaTekiBlok', [GameController::class, 'Puzzle'])->name('Puzzle');
     Route::post('/reward/{points}', [GameController::class, 'reward'])->name('reward');
-    Route::post('/cek-depresi', [PrediksiController::class, 'cekDepresi'])->name('cekDepresi');
+    // Route::post('/cek-depresi', [PrediksiController::class, 'cekDepresi'])->name('cekDepresi');
 });
 
 Route::prefix('dashboard')->name('admin.')->middleware(['auth', 'admin'])->group(function () {

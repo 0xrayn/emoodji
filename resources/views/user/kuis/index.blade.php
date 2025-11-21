@@ -8,12 +8,12 @@
 
 
     <!-- Team Start -->
-    <div class="container-xxl py-5">
+    <div class="py-5 container-xxl">
         <div class="container">
-            <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px; ">
-                <p class="d-inline-block border rounded text-primary fw-semi-bold py-1 px-3">Kuis</p>
-                <h1 class="display-5 mb-5">Daftar Kuis</h1>
-                <a class="btn btn-primary py-3 px-5" href="{{ route('kuis.result') }}">Hasil Kuis</a>
+            <div class="mx-auto text-center wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px; ">
+                <p class="px-3 py-1 border rounded d-inline-block text-primary fw-semi-bold">Kuis</p>
+                <h1 class="mb-5 display-5">Daftar Kuis</h1>
+                <a class="px-5 py-3 btn btn-primary" href="{{ route('kuis.result') }}">Hasil Kuis</a>
 
                 @if (session()->has('success') || session()->has('error'))
 
@@ -33,24 +33,13 @@
 
 
                   @if ($kuis)
-                    {{-- @foreach ($kuis as $item)
-
-                        <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 60px;">
-                            <div class="team-item">
-                                <div class="team-text">
-                                    <h4 class="mb-0">{{ $item->quiz_name }}</h4>
-                                    <a class="btn btn-primary py-3 px-5" href="{{ route('kuis.kerjakan', $item->id) }}">Kerjakan</a>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach --}}
                     @foreach ($kuis as $item)
                         <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 60px;">
                             <div class="team-item">
                                 <div class="team-text">
                                     <h4 class="mb-0">{{ $item->quiz_name }}</h4>
 
-                                    <button class="btn btn-primary py-3 px-5 unlock-btn"
+                                    <button class="px-5 py-3 btn btn-primary unlock-btn"
                                             data-type="quiz"
                                             data-id="{{ $item->id }}"
                                             data-cost="{{ $item->unlock_cost ?? 10 }}">

@@ -35,10 +35,158 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
     @yield('css')
+    {{-- DYNAMIC THEME BY GENDER: paste this after your stylesheet links in <head> --}}
+    @php
+        // Pastikan auth() ada; jika layout dipakai juga untuk guest, gunakan null safe
+        $gender = auth()->check() ? auth()->user()->gender : null;
+    @endphp
+
+    @if ($gender === 'male')
+        <style>
+            :root {
+                /* Dominant blue (male) - not everything, just primary/accents */
+                --primary: #355EFC;
+                /* main blue */
+                --accent: #6B8CFF;
+                /* lighter blue used for hover/gradients */
+                --light: #DFE4FD;
+                /* light background accents */
+                --dark: #011A41;
+                /* dark text */
+                --highlight: #BBD3FF;
+                /* subtle highlight */
+                --gender-color: var(--primary);
+                --primary-rgb: 53,
+                    94,
+                    252;
+            }
+
+            .footer {
+                background-color: var(--dark) !important;
+                color: var(--light) !important;
+            }
+
+            .footer .btn-link {
+                color: var(--light) !important;
+            }
+
+            .footer .btn-link:hover {
+                color: var(--primary) !important;
+            }
+
+            .text-primary {
+                color: var(--primary) !important;
+            }
+
+            .btn-primary {
+                background-color: var(--primary) !important;
+                border-color: var(--primary) !important;
+            }
+
+            .btn-primary:hover {
+                background-color: var(--accent) !important;
+                border-color: var(--accent) !important;
+            }
+        </style>
+    @elseif($gender === 'female')
+        <style>
+            :root {
+                /* Dominant pink (female) */
+                --primary: #FF4DA6;
+                /* main pink */
+                --accent: #FF85C4;
+                /* lighter pink */
+                --light: #FFEAF3;
+                /* light background accents */
+                --dark: #3D1230;
+                /* dark text variant */
+                --highlight: #FFD6EB;
+                --gender-color: var(--primary);
+                --primary-rgb: 255,
+                    77,
+                    166;
+            }
+
+            .footer {
+                background-color: var(--dark) !important;
+                color: var(--light) !important;
+            }
+
+            .footer .btn-link {
+                color: var(--light) !important;
+            }
+
+            .footer .btn-link:hover {
+                color: var(--primary) !important;
+            }
+
+            .text-primary {
+                color: var(--primary) !important;
+            }
+
+            .btn-primary {
+                background-color: var(--primary) !important;
+                border-color: var(--primary) !important;
+            }
+
+            .btn-primary:hover {
+                background-color: var(--accent) !important;
+                border-color: var(--accent) !important;
+            }
+        </style>
+    @else
+        <style>
+            :root {
+                /* Default (no gender) => yellow warm theme */
+                --primary: #FFD166;
+                /* main yellow */
+                --accent: #FFE08A;
+                /* lighter yellow */
+                --light: #FFF6DF;
+                /* light background accents */
+                --dark: #a88512;
+                /* dark text variant */
+                --highlight: #FFF0B3;
+                --gender-color: var(--primary);
+                --primary-rgb: 255,
+                    209,
+                    102;
+            }
+
+            .footer {
+                background-color: var(--dark) !important;
+                color: var(--light) !important;
+            }
+
+            .footer .btn-link {
+                color: var(--light) !important;
+            }
+
+            .footer .btn-link:hover {
+                color: var(--primary) !important;
+            }
+
+            .text-primary {
+                color: var(--primary) !important;
+            }
+
+            .btn-primary {
+                background-color: var(--primary) !important;
+                border-color: var(--primary) !important;
+            }
+
+            .btn-primary:hover {
+                background-color: var(--accent) !important;
+                border-color: var(--accent) !important;
+            }
+        </style>
+    @endif
+
 
 </head>
 
 <body>
+
 
     <style>
         .page-header {
@@ -83,12 +231,12 @@
                     <a href="{{ route('index') }}" class="nav-item nav-link">Home</a>
 
                     <div class="nav-item dropdown ">
-                        <a href="#" class="nav-link dropdown-toggle @yield('nav_fitur')" data-bs-toggle="dropdown ">Fitur</a>
+                        <a href="#" class="nav-link dropdown-toggle @yield('nav_fitur')"
+                            data-bs-toggle="dropdown ">Fitur</a>
                         <div class="m-0 dropdown-menu border-light">
 
                             @auth
                                 <a href="{{ route('permainan') }}" class="dropdown-item">Permainan</a>
-                                <a href="{{ route('kuis') }}" class="dropdown-item">Kuis</a>
                                 <a href="/chatify" class="dropdown-item">Chat</a>
                             @endauth
 
@@ -100,17 +248,17 @@
                     </div>
 
                     @guest
-                    <a href="{{ route('login') }}" class="nav-item nav-link">Login</a>
-                    <a href="{{ route('register') }}" class="nav-item nav-link">Register</a>
+                        <a href="{{ route('login') }}" class="nav-item nav-link">Login</a>
+                        <a href="{{ route('register') }}" class="nav-item nav-link">Register</a>
                     @endguest
-                    <a href="{{ route('tes') }}" class="nav-item nav-link @yield('nav_tes')">Tes</a>
+                    {{-- <a href="{{ route('tes') }}" class="nav-item nav-link @yield('nav_tes')">Tes</a> --}}
                     @auth
-                        <a href="{{ route('prediksi') }}" class="nav-item nav-link @yield('nav_prediksi')">Prediksi</a>
+                        <a href="{{ route('assessment') }}" class="nav-item nav-link @yield('nav_prediksi')">Assessment</a>
                         <a href="{{ route('profile.show') }}" class="nav-item nav-link @yield('nav_profil')">Profil</a>
                         <a href="{{ route('logout') }}" class="nav-item nav-link" id="logout-link">Logout</a>
                     @endauth
 
-                        <script>
+                    <script>
                         document.getElementById('logout-link').addEventListener('click', function(event) {
                             event.preventDefault();
 
@@ -129,7 +277,7 @@
                                 console.error('Error:', error);
                             });
                         });
-                        </script>
+                    </script>
 
                     {{-- <a href="contact.html" class="nav-item nav-link">Contact</a> --}}
                 </div>
@@ -142,17 +290,19 @@
     <!-- Page Header Start -->
     <div class="mb-5 container-fluid page-header wow fadeIn" data-wow-delay="0.1s">
         <div class="container">
-            <h1 class="mb-4 display-3 animated slideInDown">@yield('page') <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-                <i class="fa fa-play" aria-hidden="true"></i>
-              </button>
+            <h1 class="mb-4 display-3 animated slideInDown">@yield('page') <button class="btn btn-primary"
+                    type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+                    aria-controls="offcanvasRight">
+                    <i class="fa fa-play" aria-hidden="true"></i>
+                </button>
 
             </h1>
             <nav aria-label="breadcrumb animated slideInDown">
                 <ol class="mb-0 breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('index') }}">Home</a></li>
-                        @if (Route::currentRouteName() !== 'prediksi' && Route::currentRouteName() !== 'tes')
-                            <li class="breadcrumb-item">Fitur</li>
-                        @endif
+                    @if (Route::currentRouteName() !== 'prediksi.index' && Route::currentRouteName() !== 'tes')
+                        <li class="breadcrumb-item">Fitur</li>
+                    @endif
                     <li class="breadcrumb-item active" aria-current="page">@yield('page')</li>
                 </ol>
 
@@ -163,90 +313,81 @@
 
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
         <div class="offcanvas-header">
-          <h5 id="offcanvasRightLabel">Musik</h5>
-          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            <h5 id="offcanvasRightLabel">Musik</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+                aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-          <div class="main">
-              <div class="wrapper">
-                  <div class="top-bar">
-                    <i class="material-icons">expand_more</i>
-                    <span>Now Playing</span>
-                    <i class="material-icons">more_horiz</i>
-                  </div>
-                  <div class="img-area">
-                    <img src="" alt="">
-                  </div>
-                  <div class="song-details">
-                    <p class="name"></p>
-                    <p class="artist"></p>
-                  </div>
-                  <div class="progress-area">
-                    <div class="progress-bar">
-                      <audio id="main-audio" src=""></audio>
+            <div class="main">
+                <div class="wrapper">
+                    <div class="top-bar">
+                        <i class="material-icons">expand_more</i>
+                        <span>Now Playing</span>
+                        <i class="material-icons">more_horiz</i>
                     </div>
-                    <div class="song-timer">
-                      <span class="current-time">0:00</span>
-                      <span class="max-duration">0:00</span>
+                    <div class="img-area">
+                        <img src="" alt="">
                     </div>
-                  </div>
-                  <div class="controls">
-                    <i id="repeat-plist" class="material-icons" title="Playlist looped">repeat</i>
-                    <i id="prev" class="material-icons">skip_previous</i>
-                    <div class="play-pause">
-                      <i class="material-icons play">play_arrow</i>
+                    <div class="song-details">
+                        <p class="name"></p>
+                        <p class="artist"></p>
                     </div>
-                    <i id="next" class="material-icons">skip_next</i>
-                    <i id="more-music" class="material-icons">queue_music</i>
-                  </div>
-                  <div class="music-list">
-                    <div class="header">
-                      <div class="row">
-                        <i class= "list material-icons">queue_music</i>
-                        <span>Music list</span>
-                      </div>
-                      <i id="close" class="material-icons">close</i>
+                    <div class="progress-area">
+                        <div class="progress-bar">
+                            <audio id="main-audio" src=""></audio>
+                        </div>
+                        <div class="song-timer">
+                            <span class="current-time">0:00</span>
+                            <span class="max-duration">0:00</span>
+                        </div>
                     </div>
-                    <ul>
-                      <!-- here li list are coming from js -->
-                    </ul>
-                  </div>
+                    <div class="controls">
+                        <i id="repeat-plist" class="material-icons" title="Playlist looped">repeat</i>
+                        <i id="prev" class="material-icons">skip_previous</i>
+                        <div class="play-pause">
+                            <i class="material-icons play">play_arrow</i>
+                        </div>
+                        <i id="next" class="material-icons">skip_next</i>
+                        <i id="more-music" class="material-icons">queue_music</i>
+                    </div>
+                    <div class="music-list">
+                        <div class="header">
+                            <div class="row">
+                                <i class= "list material-icons">queue_music</i>
+                                <span>Music list</span>
+                            </div>
+                            <i id="close" class="material-icons">close</i>
+                        </div>
+                        <ul>
+                            <!-- here li list are coming from js -->
+                        </ul>
+                    </div>
                 </div>
-          </div>
+            </div>
         </div>
-      </div>
-      <script src=" {{ asset('/music/js/music-list.js ') }}"></script>
-      <script src="{{ asset('/music/js/script.js ') }}"></script>
+    </div>
+    <script src=" {{ asset('/music/js/music-list.js ') }}"></script>
+    <script src="{{ asset('/music/js/script.js ') }}"></script>
 
 
     @yield('content')
 
     <!-- Footer Start -->
-    <div class="py-5 mt-5 container-fluid bg-dark text-light footer wow fadeIn" data-wow-delay="0.1s">
+    <div class="py-5 mt-5 container-fluid text-light footer wow fadeIn" data-wow-delay="0.1s">
         <div class="container py-5">
             <div class="row g-5">
                 <div class="col-lg-3 col-md-6">
                     <h4 class="mb-4 text-white">Informasi Kontak</h4>
-                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Jl. Denpasar Raya No. 6, Kuningan, Jakarta Selatan</p>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Jl. Denpasar Raya No. 6, Kuningan,
+                        Jakarta Selatan</p>
                     <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+62 81234567890</p>
                     <p class="mb-2"><i class="fa fa-envelope me-3"></i>Emoodji@gmail.com</p>
-                    {{-- <div class="pt-2 d-flex">
-                        <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i
-                                class="fab fa-twitter"></i></a>
-                        <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i
-                                class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i
-                                class="fab fa-youtube"></i></a>
-                        <a class="btn btn-square btn-outline-light rounded-circle me-2" href=""><i
-                                class="fab fa-linkedin-in"></i></a>
-                    </div> --}}
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <h4 class="mb-4 text-white">Fitur - Fitur</h4>
-                    <a class="btn btn-link" href="{{ route('prediksi') }}">Prediksi Depresi</a>
+                    <a class="btn btn-link" href="{{ route('assessment') }}">Assesment</a>
                     <a class="btn btn-link" href="{{ route('permainan') }}">Permainan</a>
                     <a class="btn btn-link" href="{{ route('informasi') }}">Informasi</a>
-                    <a class="btn btn-link" href="{{ route('kuis') }}">Kuis</a>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <h4 class="mb-4 text-white">Support Us</h4>
@@ -257,10 +398,12 @@
                     <h4 class="mb-4 text-white">Subscribe</h4>
                     <p>Subscribe untuk menerima update terbaru.</p>
                     <div class="position-relative w-100">
-                        <form action="{{ route('subscribe')}}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('subscribe') }}" method="POST" enctype="multipart/form-data">
                             @csrf
-                            <input class="py-3 bg-white border-0 form-control w-100 ps-4 pe-5" type="email" placeholder="Email" name="email" id="email" >
-                            <button type="submit" class="top-0 py-2 mt-2 btn btn-primary position-absolute end-0 me-2">Submit</button>
+                            <input class="py-3 bg-white border-0 form-control w-100 ps-4 pe-5" type="email"
+                                placeholder="Email" name="email" id="email">
+                            <button type="submit"
+                                class="top-0 py-2 mt-2 btn btn-primary position-absolute end-0 me-2">Submit</button>
                         </form>
 
                     </div>
@@ -271,36 +414,36 @@
     <!-- Footer End -->
 
 
-        <!-- Copyright Start -->
-        <div class="py-4 container-fluid copyright">
-            <div class="container">
-                <div class="row">
-                    <div class="mb-3 text-center col-md-6 text-md-start mb-md-0">
-                        &copy; Emoodji, All Right Reserved.
-                    </div>
+    <!-- Copyright Start -->
+    <div class="py-4 container-fluid copyright">
+        <div class="container">
+            <div class="row">
+                <div class="mb-3 text-center col-md-6 text-md-start mb-md-0">
+                    &copy; Emoodji, All Right Reserved.
                 </div>
             </div>
         </div>
-        <!-- Copyright End -->
+    </div>
+    <!-- Copyright End -->
 
 
-        <!-- Back to Top -->
-        <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i
-                class="bi bi-arrow-up"></i></a>
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i
+            class="bi bi-arrow-up"></i></a>
 
 
-        <!-- JavaScript Libraries -->
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-        <script src=" {{ asset('/lib/wow/wow.min.js ') }}"></script>
-        <script src=" {{ asset('/lib/easing/easing.min.js ') }}"></script>
-        <script src=" {{ asset('/lib/waypoints/waypoints.min.js ') }}"></script>
-        <script src=" {{ asset('/lib/owlcarousel/owl.carousel.min.js ') }}"></script>
-        <script src=" {{ asset('/lib/counterup/counterup.min.js ') }}"></script>
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src=" {{ asset('/lib/wow/wow.min.js ') }}"></script>
+    <script src=" {{ asset('/lib/easing/easing.min.js ') }}"></script>
+    <script src=" {{ asset('/lib/waypoints/waypoints.min.js ') }}"></script>
+    <script src=" {{ asset('/lib/owlcarousel/owl.carousel.min.js ') }}"></script>
+    <script src=" {{ asset('/lib/counterup/counterup.min.js ') }}"></script>
 
-        <!-- Template Javascript -->
-        <script src=" {{ asset('/js/main.js ') }}"></script>
-        {{-- @yield('js') --}}
-    </body>
+    <!-- Template Javascript -->
+    <script src=" {{ asset('/js/main.js ') }}"></script>
+    {{-- @yield('js') --}}
+</body>
 
-    </html>
+</html>

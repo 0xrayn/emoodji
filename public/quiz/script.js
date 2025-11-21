@@ -125,7 +125,7 @@ function optionSelected(answer) {
         answer.insertAdjacentHTML("beforeend", crossIconTag); //adding cross icon to correct selected option
         console.log("Wrong Answer");
         for (i = 0; i < allOptions; i++) {
-            if (option_list.children[i].textContent == correcAns) { //if there is an option which is matched to an array answer 
+            if (option_list.children[i].textContent == correcAns) { //if there is an option which is matched to an array answer
                 option_list.children[i].setAttribute("class", "option correct"); //adding green color to matched option
                 option_list.children[i].insertAdjacentHTML("beforeend", tickIconTag); //adding tick icon to matched option
                 console.log("Auto selected correct answer.");
@@ -148,7 +148,7 @@ function showResult() {
     //     scoreText.innerHTML = scoreTag;  //adding new span tag inside score_Text
     //     window.location.href = "/game_1"; // redirect to index.html
     // }
-    // else 
+    // else
     if (userScore > 1) { // if user scored more than 1
         let scoreTag = '<span>Bagus, Kamu benar <p>' + userScore + '</p> dari ' + questions.length + ' </span>';
         scoreText.innerHTML = scoreTag;

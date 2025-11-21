@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Quiz;
-use App\Models\Prediksi;
+use App\Models\PrediksiFeature;
 use App\Models\Permainan;
 use App\Models\UnlockSession;
 
@@ -26,10 +26,9 @@ class UnlockController extends Controller
         $type = $request->type;
         $id   = $request->id;
 
-        // Mapping ke model
         $modelClasses = [
             'quiz'     => \App\Models\Quiz::class,
-            'prediksi' => \App\Models\Prediksi::class,
+            'prediksi' => \App\Models\PrediksiFeature::class,
             'game'     => \App\Models\Permainan::class,
         ];
 
@@ -45,33 +44,22 @@ class UnlockController extends Controller
 
         $cost = $model->unlock_cost ?? 0;
 
-        // Cek session yang SUDAH ADA
         $session = UnlockSession::where('user_id', $user->id)
             ->where('unlockable_id', $id)
             ->where('unlockable_type', $modelClasses[$type])
             ->first();
 
-        // Jika masih active, jangan kurangi reward
         if ($session && $session->status === 'active') {
-            return response()->json([
-                'message' => 'Sudah unlock sebelumnya (masih aktif)'
-            ], 200);
+            return response()->json(['message' => 'Sudah unlock sebelumnya (masih aktif)'], 200);
         }
 
-        // Cek reward cukup
         if ($user->reward < $cost) {
-            return response()->json([
-                'error'  => 'Reward tidak mencukupi',
-                'reward' => $user->reward
-            ], 400);
+            return response()->json(['error' => 'Reward tidak mencukupi'], 400);
         }
 
-        // Kurangi reward
-        // $user->decrement('reward', $cost);
         User::where('id', $user->id)->decrement('reward', $cost);
 
-        // Buat session baru atau update session lama
-        $session = UnlockSession::updateOrCreate(
+        UnlockSession::updateOrCreate(
             [
                 'user_id'         => $user->id,
                 'unlockable_id'   => $id,
@@ -83,13 +71,9 @@ class UnlockController extends Controller
             ]
         );
 
-        return response()->json([
-            'message' => 'Berhasil unlock!',
-            // 'reward'  => $user->refresh()->reward, // <-- bikin reward ke-update
-            'reward' => User::find($user->id)->reward,
-            'unlock_session' => $session
-        ]);
+        return response()->json(['message' => 'Berhasil unlock!'], 200);
     }
+
 
 
     /**
@@ -102,7 +86,7 @@ class UnlockController extends Controller
         if ($type === 'quiz') {
             $class = Quiz::class;
         } elseif ($type === 'prediksi') {
-            $class = Prediksi::class;
+            $class = PrediksiFeature::class;
         } elseif ($type === 'game') {
             $class = Permainan::class;
         } else {
@@ -134,7 +118,7 @@ class UnlockController extends Controller
         if ($type === 'quiz') {
             $class = Quiz::class;
         } elseif ($type === 'prediksi') {
-            $class = Prediksi::class;
+            $class = PrediksiFeature::class;
         } elseif ($type === 'game') {
             $class = Permainan::class;
         } else {

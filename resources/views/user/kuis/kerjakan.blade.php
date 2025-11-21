@@ -74,7 +74,7 @@
         // let questions = [];
         let questions = JSON.parse('<?= json_encode($questions) ?>');
         let quizBy = '{{ $quiz->by }}';
-        let url = '{{ route('kuis.rec') }}';
+        let url = '{{ route('assessment') }}';
         let urlApiSend = '{{ route('kuis.api', $quiz->id) }}';
     </script>
     <script src="{{ asset('quiz/script.js') }}"></script>

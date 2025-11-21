@@ -2,87 +2,130 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Prediksi;
+use App\Models\User;
+use App\Models\PrediksiFeature;
+use App\Models\PrediksiLog;
+use App\Models\UnlockSession;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
 class PrediksiController extends Controller
 {
+    // Halaman utama prediksi
     public function index()
     {
-        return view('user.pred.index');
+        $feature = PrediksiFeature::first();
+        $user = Auth::user();
+
+        $session = UnlockSession::where('user_id', $user->id)
+            ->where('unlockable_type', PrediksiFeature::class)
+            ->where('unlockable_id', $feature->id)
+            ->first();
+
+        return view('user.pred.index', [
+            'feature' => $feature,
+            'session' => $session
+        ]);
     }
 
-    public function testing()
+    // Unlock prediksi
+    public function unlock(Request $request)
     {
-        return view('user.testing');
+        $feature = PrediksiFeature::findOrFail($request->feature_id);
+        $user = Auth::user();
+
+        if ($user->reward < $feature->unlock_cost) {
+            return back()->with('error', 'Reward tidak cukup untuk unlock.');
+        }
+
+        $user = Auth::user();
+        User::where('id', $user->id)->decrement('reward', $feature->unlock_cost);
+
+        // $user->decrement('reward', $feature->unlock_cost);
+
+        UnlockSession::updateOrCreate(
+            [
+                'user_id' => $user->id,
+                'unlockable_id' => $feature->id,
+                'unlockable_type' => PrediksiFeature::class
+            ],
+            [
+                'status' => 'active',
+                'unlock_cost' => $feature->unlock_cost
+            ]
+        );
+
+        return back()->with('success', 'Berhasil unlock prediksi!');
     }
 
-//     public function cekDepresi(Request $request)
-//     {
-//         $data = $request->only(['femaleres', 'age', 'married', 'children', 'hhsize', 'edu', "day_of_week", "saved_mpesa", "received_mpesa", "given_mpesa", "ent_wagelabor", "ent_ownfarm", "ent_business", "ent_nonagbusiness"]);
-
-//         $response = Http::post('http://127.0.0.1:5000/predict', [
-//             'data' => array_values($data)
-//         ]);
-
-//         if ($response->successful()) {
-//             return view('user.pred.hasil', ['predicted_proba' => $response->json()]);
-//         } else {
-//             return response()->json(['error' => 'Failed to get prediction data.'], 500);
-//         }
-//     }
-
-    public function cekDepresi(Request $request)
+    // Submit prediksi
+    public function submit(Request $request)
     {
+        $feature = PrediksiFeature::first();
+        $user = Auth::user();
+
+        // ambil data input user
         $data = $request->only([
-            'femaleres', 'age', 'married', 'children', 'hhsize', 'edu',
-            'day_of_week', 'saved_mpesa', 'received_mpesa', 'given_mpesa',
-            'ent_wagelabor', 'ent_ownfarm', 'ent_business', 'ent_nonagbusiness'
+            'femaleres',
+            'age',
+            'married',
+            'children',
+            'hhsize',
+            'edu',
+            'day_of_week',
+            'saved_mpesa',
+            'received_mpesa',
+            'given_mpesa',
+            'ent_wagelabor',
+            'ent_ownfarm',
+            'ent_business',
+            'ent_nonagbusiness'
         ]);
 
+        // Kirim ke ML API
         $response = Http::post('http://127.0.0.1:5000/predict', [
             'data' => array_values($data)
         ]);
 
-        if ($response->successful()) {
-            $predictedProba = $response->json();
-            $probability = $predictedProba['predicted_proba_class_1'];
-
-            $noTeks = 0;
-            if ($probability >= 0 && $probability < 0.1999) {
-                $noTeks = 1;
-            } elseif ($probability >= 0.1999 && $probability < 0.3999) {
-                $noTeks = 2;
-            } elseif ($probability >= 0.3999 && $probability < 0.5999) {
-                $noTeks = 3;
-            } elseif ($probability >= 0.5999 && $probability < 0.7999) {
-                $noTeks = 4;
-            } elseif ($probability >= 0.7999 && $probability <= 1) {
-                $noTeks = 5;
-            }
-
-            $teks = DB::table('teks')->where('no_teks', $noTeks)->first();
-
-            $user_id = auth()->id();
-            Prediksi::create([
-                'predicted_proba_class_0' => $predictedProba['predicted_proba_class_0'],
-                'predicted_proba_class_1' => $predictedProba['predicted_proba_class_1'],
-                'no_teks' => $noTeks,
-                'user_id' => $user_id,
-            ]);
-
-            return view('user.pred.hasil', [
-                'predicted_proba_class_0' => $predictedProba['predicted_proba_class_0'],
-                'predicted_proba_class_1' => $predictedProba['predicted_proba_class_1'],
-                'teks' => $teks
-            ]);
-        } else {
-            return response()->json(['error' => 'Failed to get prediction data.'], 500);
+        if (!$response->successful()) {
+            return back()->withErrors(['error' => 'Prediksi gagal. Silakan coba lagi.']);
         }
+
+        $predictedProba = $response->json();
+        $probability = $predictedProba['predicted_proba_class_1'];
+
+        // tentukan teks hasil
+        $noTeks = match (true) {
+            $probability < 0.1999 => 1,
+            $probability < 0.3999 => 2,
+            $probability < 0.5999 => 3,
+            $probability < 0.7999 => 4,
+            default => 5,
+        };
+
+        $teks = DB::table('teks')->where('no_teks', $noTeks)->first();
+
+        // simpan log
+        PrediksiLog::create([
+            'user_id' => $user->id,
+            'prediksi_feature_id' => $feature->id,
+            'predicted_proba_class_0' => $predictedProba['predicted_proba_class_0'],
+            'predicted_proba_class_1' => $predictedProba['predicted_proba_class_1'],
+            'no_teks' => $noTeks
+        ]);
+
+        // tandai session completed
+        UnlockSession::where('user_id', $user->id)
+            ->where('unlockable_id', $feature->id)
+            ->where('unlockable_type', PrediksiFeature::class)
+            ->update(['status' => 'completed']);
+
+        return view('user.pred.hasil', [
+            'predicted_proba_class_0' => $predictedProba['predicted_proba_class_0'],
+            'predicted_proba_class_1' => $predictedProba['predicted_proba_class_1'],
+            'teks' => $teks
+        ]);
     }
-
-
-
 }

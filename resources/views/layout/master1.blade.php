@@ -72,7 +72,7 @@
                         <div class="m-0 dropdown-menu border-light">
                             @auth
                                 <a href="{{ route('permainan') }}" class="dropdown-item">Permainan</a>
-                                <a href="{{ route('kuis') }}" class="dropdown-item">Kuis</a>
+                                {{-- <a href="{{ route('kuis') }}" class="dropdown-item">Kuis</a> --}}
                                 <a href="/chatify" class="dropdown-item">Chat</a>
                             @endauth
                             <a href="{{ route('informasi') }}" class="dropdown-item">Informasi</a>
@@ -86,9 +86,9 @@
                         <a href="{{ route('login') }}" class="nav-item nav-link">Login</a>
                         <a href="{{ route('register') }}" class="nav-item nav-link">Register</a>
                     @endguest
-                    <a href="{{ route('tes') }}" class="nav-item nav-link @yield('nav_tes')">Tes</a>
+                    {{-- <a href="{{ route('tes') }}" class="nav-item nav-link @yield('nav_tes')">Tes</a> --}}
                     @auth
-                        <a href="{{ route('prediksi') }}" class="nav-item nav-link">Prediksi</a>
+                        <a href="{{ route('assessment') }}" class="nav-item nav-link">Assessment</a>
                         <a href="{{ route('profile.show') }}" class="nav-item nav-link @yield('nav_profil')">Profil</a>
                         <a href="{{ route('logout') }}" class="nav-item nav-link" id="logout-link">Logout</a>
                     @endauth
@@ -207,10 +207,9 @@
             </div>
             <div class="col-lg-3 col-md-6">
                 <h4 class="mb-4 text-white">Fitur - Fitur</h4>
-                <a class="btn btn-link" href="{{ route('prediksi') }}">Prediksi Depresi</a>
+                <a class="btn btn-link" href="{{ route('assessment') }}">Assessment</a>
                 <a class="btn btn-link" href="{{ route('permainan') }}">Permainan</a>
                 <a class="btn btn-link" href="{{ route('informasi') }}">Informasi</a>
-                <a class="btn btn-link" href="{{ route('kuis') }}">Kuis</a>
             </div>
             <div class="col-lg-3 col-md-6">
                 <h4 class="mb-4 text-white">Support Us</h4>

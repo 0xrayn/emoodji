@@ -234,6 +234,14 @@ class DatabaseSeeder extends Seeder
             ],
         ]);
 
+        DB::table('prediksi_features')->insert([
+            [
+                'name' => 'Tes Prediksi Depresi',
+                'unlock_cost' => 20
+
+            ]
+        ]);
+
         DB::table('questions')->insert([
             [
                 'question' => "Bersyukur adalah sikap menghargai dan merasa puas dengan apa yang dimiliki.",

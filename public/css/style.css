@@ -1,11 +1,5 @@
 /********** Template CSS **********/
-:root {
-    --primary: #355EFC;
-    --secondary: #E93C05;
-    --tertiary: #555555;
-    --light: #DFE4FD;
-    --dark: #011A41;
-}
+
 
 .back-to-top {
     position: fixed;
@@ -214,9 +208,17 @@ h6,
 
 
 /*** Facts ***/
-.facts {
+/* .facts {
     background: linear-gradient(rgba(53, 94, 252, .95), rgba(53, 94, 252, .95)), url(../img/bg.png);
+} */
+
+.facts {
+    background: linear-gradient(
+        rgba(var(--primary-rgb), 0.95),
+        rgba(var(--primary-rgb), 0.95)
+    ), url(../img/bg.png);
 }
+
 
 
 /*** Callback ***/
@@ -520,15 +522,19 @@ h6,
     box-shadow: none;
 }
 
+/* Footer mengikuti warna gender */
 .copyright {
-    color: var(--light);
-    background: #000B1C;
+    background: var(--gender-color) !important;
+    color: #fff !important;
 }
 
 .copyright a {
-    color: var(--light);
+    color: #fff !important;
 }
 
 .copyright a:hover {
-    color: var(--primary);
+    color: #000 !important;
+}
+.text-gender {
+    color: var(--gender-color) !important;
 }
