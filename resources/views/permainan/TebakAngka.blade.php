@@ -11,6 +11,9 @@
 @section('content')
     <div class="py-5 container-xxl">
         <div class="container">
+             <div class="mt-3 text-center">
+                <strong><h4>Reward kamu: </strong><span id="userReward">{{ Auth::user()->reward }}</h4></span>
+            </div>
             <div id="game">
                 <h4 class="mb-5 display-5">
                     Saya memikirkan angka antara 1-100.<br />
@@ -26,11 +29,6 @@
             <button id="restart">Mengulang Kembali</button>
             <div class="result">
                 <div id="hint"></div>
-            </div>
-
-            <!-- Tampilkan reward user -->
-            <div class="mt-3">
-                <strong>Reward kamu: </strong><span id="userReward">{{ Auth::user()->reward }}</span>
             </div>
         </div>
     </div>
