@@ -12,6 +12,7 @@ use App\Http\Controllers\DiskusiController;
 use App\Http\Controllers\RewardController;
 use App\Http\Controllers\PrediksiController;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\MyMessagesController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InformasiController;
 use App\Http\Controllers\PertanyaanController;
@@ -36,6 +37,7 @@ Route::middleware('auth')->group(function () {
     // Route::get('/tes', function () {
     //     return view('user.kuis');
     // });
+    Route::post('/send/message', [MyMessagesController::class, 'send'])->name('send.message');
 
     Route::post('/unlock', [UnlockController::class, 'unlock'])->name('unlock');
     Route::post('/unlock/complete/{type}/{id}', [UnlockController::class, 'complete'])->name('unlock.complete');
