@@ -10,12 +10,13 @@ class Prediksi extends Model
     use HasFactory;
 
     protected $fillable = [
-        'predicted_proba_class_0',
-        'predicted_proba_class_1',
+        'class_0_proba',
+        'class_1_proba',
         'no_teks',
         'user_id',
         'unlock_cost'
     ];
+
 
     public function unlockSessions()
     {

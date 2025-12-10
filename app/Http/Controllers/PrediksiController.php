@@ -85,16 +85,20 @@ class PrediksiController extends Controller
         ]);
 
         // Kirim ke ML API
-        $response = Http::post('http://127.0.0.1:5000/predict', [
-            'data' => array_values($data)
-        ]);
+        $response = Http::withoutVerifying()->post(
+            'https://depresi-api-395027170614.asia-southeast2.run.app/predict',
+            [
+                'data' => array_values($data)
+            ]
+        );
+
 
         if (!$response->successful()) {
             return back()->withErrors(['error' => 'Prediksi gagal. Silakan coba lagi.']);
         }
 
         $predictedProba = $response->json();
-        $probability = $predictedProba['predicted_proba_class_1'];
+        $probability = $predictedProba['class_1_proba'];
 
         // tentukan teks hasil
         $noTeks = match (true) {
@@ -111,8 +115,8 @@ class PrediksiController extends Controller
         PrediksiLog::create([
             'user_id' => $user->id,
             'prediksi_feature_id' => $feature->id,
-            'predicted_proba_class_0' => $predictedProba['predicted_proba_class_0'],
-            'predicted_proba_class_1' => $predictedProba['predicted_proba_class_1'],
+            'class_0_proba' => $predictedProba['class_0_proba'],
+            'class_1_proba' => $predictedProba['class_1_proba'],
             'no_teks' => $noTeks
         ]);
 
@@ -123,8 +127,8 @@ class PrediksiController extends Controller
             ->update(['status' => 'completed']);
 
         return view('user.pred.hasil', [
-            'predicted_proba_class_0' => $predictedProba['predicted_proba_class_0'],
-            'predicted_proba_class_1' => $predictedProba['predicted_proba_class_1'],
+            'class_0_proba' => $predictedProba['class_0_proba'],
+            'class_1_proba' => $predictedProba['class_1_proba'],
             'teks' => $teks
         ]);
     }

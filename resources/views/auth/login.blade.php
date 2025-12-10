@@ -83,10 +83,10 @@
 							{{ __('Log in') }}
 						</button>
 
-						<a href="auth/redirect" class="Regis100-form-btn">
+						{{-- <a href="auth/redirect" class="Regis100-form-btn">
 							<i class="fab fa-google"></i>
 							<span class="ml-2">Login with Google</span>
-						</a>
+						</a> --}}
 
 					</div>
 

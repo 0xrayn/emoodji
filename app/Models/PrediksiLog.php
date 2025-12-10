@@ -9,10 +9,11 @@ class PrediksiLog extends Model
     protected $fillable = [
         'user_id',
         'prediksi_feature_id',
-        'predicted_proba_class_0',
-        'predicted_proba_class_1',
+        'class_0_proba',
+        'class_1_proba',
         'no_teks'
     ];
+
 
     public function feature()
     {
